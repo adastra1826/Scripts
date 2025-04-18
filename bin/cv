@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Script: create_venv.sh
+# Description: This script creates and activates a Python virtual environment for use in VSCode.
+# Usage: ./create_venv.sh [venv_name]
+
+# Function to display script usage
+usage() {
+    echo "Usage: $0 [venv_name]"
+    echo "If venv_name is not provided, 'venv' will be used as the default name."
+}
+
+# Function to get next available folder name
+get_unique_folder_name() {
+    local base_name=$1
+    local folder_name=$base_name
+    local counter=1
+
+    while [ -d "$folder_name" ]; do
+        folder_name="${base_name}_${counter}"
+        counter=$((counter + 1))
+    done
+
+    echo "$folder_name"
+}
+
+# Check if Python3 is installed
+if ! command -v python3 &> /dev/null; then
+    echo "Error: Python3 is not installed. Please install Python3 and try again."
+    exit 1
+fi
+
+# Set the virtual environment name
+BASE_VENV_NAME=${1:-venv}
+VENV_NAME=$(get_unique_folder_name "$BASE_VENV_NAME")
+
+# Inform user if name was modified
+if [ "$VENV_NAME" != "$BASE_VENV_NAME" ]; then
+    echo "Note: Directory '$BASE_VENV_NAME' already exists."
+    echo "Using '$VENV_NAME' instead."
+fi
+
+# Create the virtual environment
+echo "Creating virtual environment: $VENV_NAME"
+python3 -m venv "$VENV_NAME"
+
+# Check if venv creation was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to create virtual environment. Please check your Python installation and try again."
+    exit 1
+fi
+
+# Activate the virtual environment
+echo "Activating virtual environment"
+source "$VENV_NAME/bin/activate"
+
+# Check if activation was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to activate virtual environment. Please check the script and try again."
+    exit 1
+fi
+
+# Print success message and instructions
+echo "Virtual environment '$VENV_NAME' has been created and activated successfully."
+echo ""
+echo "To use this environment in VSCode:"
+echo "1. Open your project in VSCode"
+echo "2. Press Cmd+Shift+P (Mac) or Ctrl+Shift+P (Windows/Linux) to open the Command Palette"
+echo "3. Type 'Python: Select Interpreter' and select it"
+echo "4. Choose the interpreter path that includes '$VENV_NAME'"
+echo ""
+echo "To deactivate the virtual environment when you're done, simply type 'deactivate' in the terminal."
+
+# Remind user to run script with source if they didn't
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo ""
+    echo "NOTE: To persist the virtual environment activation in your current shell session,"
+    echo "run this script using the source command:"
+    echo "source ./create_venv.sh [venv_name]"
+fi
+
+cd $VENV_NAME
+code .

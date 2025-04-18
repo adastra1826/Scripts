@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /Users/nicholasdoherty/Documents/VSC
+
+cv
+
+exit
