@@ -1,1 +1,1 @@
-A collection of personal shell scripts/functions.
+A collection of personal scripts/functions.
