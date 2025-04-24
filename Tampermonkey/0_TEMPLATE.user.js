@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         New Userscript
-// @author       You
+// @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
 // @version      2025-04-24
