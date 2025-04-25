@@ -9,8 +9,6 @@
 // @grant        GM.xmlHttpRequest
 // @require
 // @include      *
-// @match        *
-// @exclude      *
 // @connect      localhost
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
