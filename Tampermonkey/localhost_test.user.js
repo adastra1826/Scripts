@@ -7,9 +7,8 @@
 // @description  Test the ability to connect to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        GM_xmlhttpRequest
-// @require
 // @include      *
-// @connect      localhost
+// @connect      http://localhost/*
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
 // @updateURL    https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
@@ -22,6 +21,22 @@
 
     const url = 'http://localhost:4000';
     const data = 'data';
+
+    GM_xmlhttpRequest({
+        method: 'POST',
+        url,
+        data,
+        onreadystatechange(res) {
+          console.log('readyState', res.readyState, 'status', res.status);
+        },
+        onload(res) {
+          console.log('loaded:', res.responseText);
+        },
+        onerror(err) {
+          console.error('error:', err);
+        }
+      });
+      
 
     GM_xmlhttpRequest({
         method: 'POST',
