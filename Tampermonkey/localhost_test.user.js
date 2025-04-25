@@ -7,7 +7,7 @@
 // @description  Test the ability to connect to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        GM_xmlhttpRequest
-// @include      *
+// @match        *://*/*
 // @connect      localhost
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
