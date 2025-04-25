@@ -21,7 +21,7 @@
     console.log('Beginning script.')
 
     const url = 'http://localhost:4000';
-    const data = 'data';
+    const data = JSON.stringify({ test: 'ok' });
     
     console.log('GM_');
 
