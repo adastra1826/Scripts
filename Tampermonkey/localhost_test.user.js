@@ -23,7 +23,7 @@
     const url = 'http://localhost:4000';
     const data = 'data';
 
-    GM_xmlHttpRequest({
+    GM_xmlhttpRequest({
         method: 'POST',
         url: url,
         data: data,
