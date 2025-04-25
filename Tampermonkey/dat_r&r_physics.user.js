@@ -9,8 +9,8 @@
 // @match        *://*/*
 // @connect      127.0.0.1
 // @run-at       document-idle
-// @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
-// @updateURL    https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
+// @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/dat_r&r_physics.user.js
+// @updateURL    https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/dat_r&r_physics.user.js
 // ==/UserScript==
 
 (function() {
