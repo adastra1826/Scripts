@@ -7,6 +7,7 @@
 // @description  Test the ability to connect to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        GM_xmlhttpRequest
+// @grant        GM.xmlHttpRequest
 // @match        *://*/*
 // @connect      localhost
 // @run-at       document-idle
@@ -21,22 +22,8 @@
 
     const url = 'http://localhost:4000';
     const data = 'data';
-
-    GM_xmlhttpRequest({
-        method: 'POST',
-        url,
-        data,
-        onreadystatechange(res) {
-          console.log('readyState', res.readyState, 'status', res.status);
-        },
-        onload(res) {
-          console.log('loaded:', res.responseText);
-        },
-        onerror(err) {
-          console.error('error:', err);
-        }
-      });
-      
+    
+    console.log('GM_');
 
     GM_xmlhttpRequest({
         method: 'POST',
@@ -44,6 +31,29 @@
         data: data,
         headers: {
             'Content-Type': 'application/json'
+        },
+        onreadystatechange(response) {
+            console.log('readyState', response.readyState, 'status', response.status);
+        },
+        onload: function(response) {
+            console.log('Response: ', response.responseText);
+        },
+        onerror: function(error) {
+            console.log('Error: ', error)
+        }
+    });
+
+    console.log('GM.');
+
+    GM.xmlHttpRequest({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        onreadystatechange(response) {
+            console.log('readyState', response.readyState, 'status', response.status);
         },
         onload: function(response) {
             console.log('Response: ', response.responseText);
