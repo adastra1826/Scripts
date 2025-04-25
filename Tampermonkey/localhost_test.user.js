@@ -22,17 +22,21 @@
 
     console.log('Beginning script.')
 
-    const url = 'localhost:4000';
+    const url = 'http://localhost:4000';
     const data = 'data';
 
-    const r = await GM.xmlHttpRequest({
+    GM_xmlHttpRequest({
         method: 'POST',
+        url: url,
         data: data,
         headers: {
             'Content-Type': 'application/json'
         },
         onload: function(response) {
             console.log('Response: ', response.responseText);
+        },
+        onerror: function(error) {
+            console.log('Error: ', error)
         }
     });
 
