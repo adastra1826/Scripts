@@ -8,7 +8,7 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        GM_xmlhttpRequest
 // @include      *
-// @connect      http://localhost/*
+// @connect      localhost
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
 // @updateURL    https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/localhost_test.user.js
