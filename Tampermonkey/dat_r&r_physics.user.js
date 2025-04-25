@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Localhost Test
+// @name         DaT R&R Physics
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
