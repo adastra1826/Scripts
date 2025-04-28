@@ -9,8 +9,8 @@
 // @match        *://*/*
 // @connect      127.0.0.1
 // @run-at       document-idle
-// @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/dat_r&r_physics.user.js
-// @updateURL    https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/dat_r&r_physics.user.js
+// @downloadURL  https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/dat_get_instructions.user.js
+// @updateURL    https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/dat_get_instructions.user.js
 // ==/UserScript==
 
 (function() {
@@ -19,7 +19,7 @@
     console.log('Beginning script.')
 
     const url = 'https://127.0.0.1:4000/dat';
-    const data = JSON.stringify({ test: 'ok' });
+    const data = document.getElementById('instructions')
 
     // — fetch() version —
     fetch(url, {
