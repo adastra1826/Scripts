@@ -19,13 +19,17 @@
     console.log('Beginning script.')
 
     const url = 'https://127.0.0.1:4000/dat';
-    const data = document.getElementById('instructions')
+    
+    const instructionsDOMElement = document.getElementById('instructions')
+    const instructionsText = instructionsDOMElement.textContent
+
+    const payload = JSON.stringify({ text: instructionsText })
 
     // — fetch() version —
     fetch(url, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    data,
+        body:    payload,
     })
         .then(response => {
         console.log('fetch status:', response.status);
