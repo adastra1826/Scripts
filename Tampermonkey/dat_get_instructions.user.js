@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         DaT R&R Physics
+// @name         DaT Get Instructions
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
