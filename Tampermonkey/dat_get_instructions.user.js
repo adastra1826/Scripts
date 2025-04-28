@@ -3,7 +3,7 @@
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.0
+// @version      1.0.1
 // @description  Pull data from page and send to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @match        *://*/*
@@ -19,7 +19,7 @@
     console.log('Beginning script.')
 
     const url = 'https://127.0.0.1:4000/dat';
-    
+
     const instructionsDOMElement = document.getElementById('instructions')
     const instructionsText = instructionsDOMElement.textContent
 
