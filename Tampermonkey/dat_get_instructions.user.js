@@ -3,7 +3,7 @@
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.8
+// @version      1.0.9
 // @description  Pull data from page and send to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @match        *://*/*
@@ -36,8 +36,11 @@
 
       const payload = JSON.stringify({
         type: "model_response",
+        length: codeText.length,
         text: codeText,
       });
+
+      console.log("Payload size:", payload.length);
 
       fetch(url, {
         method: "POST",
@@ -69,8 +72,11 @@
 
     const payload = JSON.stringify({
       type: "worker_code",
+      length: workerCodeText.length,
       text: workerCodeText,
     });
+
+    console.log("Payload size:", payload.length);
 
     fetch(url, {
       method: "POST",
