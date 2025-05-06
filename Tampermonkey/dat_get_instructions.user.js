@@ -3,7 +3,7 @@
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.6
+// @version      1.0.7
 // @description  Pull data from page and send to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @match        *://*/*
@@ -26,7 +26,7 @@
 
         const modelCodeDOMElement = document.querySelector(modelResponseSelectorPath);
         if (modelCodeDOMElement) {
-            codeText = modelCodeDOMElement.textContent;
+            codeText = modelCodeDOMElement.innerText;
             console.log('Found code.');
 
             const payload = JSON.stringify({ 
