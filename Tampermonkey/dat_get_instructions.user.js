@@ -3,7 +3,7 @@
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.4
+// @version      1.0.5
 // @description  Pull data from page and send to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @match        *://*/*
@@ -20,31 +20,41 @@
 
     const url = 'https://127.0.0.1:4000/dat';
 
-    const query = '#task-response\\/WorkerTaskResponseView-hybrid-root > div.tw-pointer-events-auto > div > div > div > div.tw-sticky.tw-top-px.tw-h-screen > div > div:nth-child(1) > div > div > div.tw-sticky.tw--top-2.tw--mx-5.tw--mt-2.tw-mb-2.tw-rounded-lg.tw-bg-\\[\\#F4F4F4\\] > div';
+    let instructionsText = '';
+    try {
+        const modelResponseSelectorPath = '#question-5 > div > div.tw-pt-3 > div > div.surge-wysiwyg.tw-whitespace-pre-wrap.tw-rounded-input.tw-border.tw-bg-white-100.tw-p-3 > div > pre > code > span';
 
-    const instructionsDOMElement = document.querySelector(query);
-    const instructionsText = instructionsDOMElement.textContent;
-    console.log('Text: ', instructionsText);
+        const instructionsDOMElement = document.querySelector(modelResponseSelectorPath);
+        if (instructionsDOMElement) {
+            instructionsText = instructionsDOMElement.textContent;
+            console.log('Found instructions.');
 
-    const payload = JSON.stringify({ text: instructionsText });
-    console.log('JSON: ', payload);
-
-    // — fetch() version —
-    fetch(url, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    payload,
-    })
-        .then(response => {
-        console.log('fetch status:', response.status);
-        return response.text();
-    })
-        .then(body => {
-        console.log('fetch body:', body);
-    })
-        .catch(err => {
-        console.error('fetch error:', err);
-    });
+            const payload = JSON.stringify({ 
+                type: 'model_response',
+                text: instructionsText 
+            });
+        
+            fetch(url, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    payload,
+            })
+                .then(response => {
+                console.log('fetch status:', response.status);
+                return response.text();
+            })
+                .then(body => {
+                console.log('fetch body:', body);
+            })
+                .catch(err => {
+                console.error('fetch error:', err);
+            });
+        } else {
+            console.error('No instructions found.');
+        }
+    } catch (error) {
+        console.error('Error: ', error);
+    }
 
 
     console.log('Ending script.');
