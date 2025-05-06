@@ -3,7 +3,7 @@
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.10
+// @version      1.0.11
 // @description  Pull data from page and send to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @match        *://*/*
@@ -68,38 +68,40 @@
     if (workerCodeDOMElement) {
       workerCodeText = workerCodeDOMElement.innerText;
       console.log("Found worker code.");
-    }
 
-    const workerCodePayload = JSON.stringify({
-      type: "worker_code",
-      length: workerCodeText.length,
-      text: workerCodeText,
-    });
-
-    console.log("Payload size:", workerCodePayload.length);
-
-    fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: workerCodePayload,
-    })
-      .then((response) => {
-        console.log("fetch status:", response.status);
-      })
-      .then((body) => {
-        console.log("fetch body:", body);
-      })
-      .catch((err) => {
-        console.error("fetch error:", err);
+      const workerCodePayload = JSON.stringify({
+        type: "worker_code",
+        length: workerCodeText.length,
+        text: workerCodeText,
       });
 
-      // Get final edited response
-      const finalEditedResponseSelectorPath = '#question-15 > div > div.tw-pt-3 > div > div.surge-wysiwyg.tw-whitespace-pre-wrap.tw-rounded-input.tw-border.tw-bg-white-100.tw-p-3 > div > pre > code'
-      const finalEditedResponseDOMElement = document.querySelector(finalEditedResponseSelectorPath);
-      if (finalEditedResponseDOMElement) {
-        finalEditedResponseText = finalEditedResponseDOMElement.innerText;
-        console.log("Found final edited response.");
-      }
+      console.log("Payload size:", workerCodePayload.length);
+
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: workerCodePayload,
+      })
+        .then((response) => {
+          console.log("fetch status:", response.status);
+        })
+        .then((body) => {
+          console.log("fetch body:", body);
+        })
+        .catch((err) => {
+          console.error("fetch error:", err);
+        });
+    }
+
+    // Get final edited response
+    const finalEditedResponseSelectorPath =
+      "#question-15 > div > div.tw-pt-3 > div > div.surge-wysiwyg.tw-whitespace-pre-wrap.tw-rounded-input.tw-border.tw-bg-white-100.tw-p-3 > div > pre > code";
+    const finalEditedResponseDOMElement = document.querySelector(
+      finalEditedResponseSelectorPath
+    );
+    if (finalEditedResponseDOMElement) {
+      finalEditedResponseText = finalEditedResponseDOMElement.innerText;
+      console.log("Found final edited response.");
 
       const finalEditedResponsePayload = JSON.stringify({
         type: "final_edited_response",
@@ -123,6 +125,7 @@
         .catch((err) => {
           console.error("fetch error:", err);
         });
+    }
   } catch (error) {
     console.error("Error: ", error);
   }
