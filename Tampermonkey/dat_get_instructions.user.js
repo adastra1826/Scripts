@@ -3,7 +3,7 @@
 // @author       Nicholas Doherty
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.7
+// @version      1.0.8
 // @description  Pull data from page and send to localhost. https://www.tampermonkey.net/documentation.php
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @match        *://*/*
@@ -13,49 +13,82 @@
 // @updateURL    https://raw.githubusercontent.com/adastra1826/Scripts/refs/heads/main/Tampermonkey/dat_get_instructions.user.js
 // ==/UserScript==
 
-(function() {
-    'use strict';
+(function () {
+  "use strict";
 
-    console.log('Beginning script.');
+  console.log("Beginning script.");
 
-    const url = 'https://127.0.0.1:4000/dat';
+  const url = "https://127.0.0.1:4000/dat";
 
-    let codeText = '';
-    try {
-        const modelResponseSelectorPath = '#question-5 > div > div.tw-pt-3 > div > div.surge-wysiwyg.tw-whitespace-pre-wrap.tw-rounded-input.tw-border.tw-bg-white-100.tw-p-3 > div > pre > code';
+  let codeText = "";
+  let workerCodeText = "";
+  try {
+    const modelResponseSelectorPath =
+      "#question-5 > div > div.tw-pt-3 > div > div.surge-wysiwyg.tw-whitespace-pre-wrap.tw-rounded-input.tw-border.tw-bg-white-100.tw-p-3 > div > pre > code";
 
-        const modelCodeDOMElement = document.querySelector(modelResponseSelectorPath);
-        if (modelCodeDOMElement) {
-            codeText = modelCodeDOMElement.innerText;
-            console.log('Found code.');
+    // Get the model code
+    const modelCodeDOMElement = document.querySelector(
+      modelResponseSelectorPath
+    );
+    if (modelCodeDOMElement) {
+      codeText = modelCodeDOMElement.innerText;
+      console.log("Found model code.");
 
-            const payload = JSON.stringify({ 
-                type: 'model_response',
-                text: codeText 
-            });
-        
-            fetch(url, {
-                method:  'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body:    payload,
-            })
-                .then(response => {
-                console.log('fetch status:', response.status);
-                return response.text();
-            })
-                .then(body => {
-                console.log('fetch body:', body);
-            })
-                .catch(err => {
-                console.error('fetch error:', err);
-            });
-        } else {
-            console.error('No instructions found.');
-        }
-    } catch (error) {
-        console.error('Error: ', error);
+      const payload = JSON.stringify({
+        type: "model_response",
+        text: codeText,
+      });
+
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      })
+        .then((response) => {
+          console.log("fetch status:", response.status);
+          return response.text();
+        })
+        .then((body) => {
+          console.log("fetch body:", body);
+        })
+        .catch((err) => {
+          console.error("fetch error:", err);
+        });
+    } else {
+      console.error("No instructions found.");
     }
 
+    // Get the final code
+    const workerCodeSelectorPath =
+      "#question-11 > div > div.tw-pt-3 > div > div.cm-theme > div > div.cm-scroller > div.cm-content";
+    const workerCodeDOMElement = document.querySelector(workerCodeSelectorPath);
+    if (workerCodeDOMElement) {
+      workerCodeText = workerCodeDOMElement.innerText;
+      console.log("Found worker code.");
+    }
 
-    console.log('Ending script.');
+    const payload = JSON.stringify({
+      type: "worker_code",
+      text: workerCodeText,
+    });
+
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: payload,
+    })
+      .then((response) => {
+        console.log("fetch status:", response.status);
+      })
+      .then((body) => {
+        console.log("fetch body:", body);
+      })
+      .catch((err) => {
+        console.error("fetch error:", err);
+      });
+  } catch (error) {
+    console.error("Error: ", error);
+  }
+
+  console.log("Ending script.");
 })();
